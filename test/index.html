@@ -1,0 +1,16 @@
+<html>
+<head>
+<script src="x.js"></script>
+<script>
+	adLoad = require('./index.js')(require)
+
+	adLoad('y.js', './y-src').then(function (y) {
+		console.log('loaded')
+		console.log(y(2,3))
+	})
+
+</script>
+</head>
+<body>
+</body>
+</html>
