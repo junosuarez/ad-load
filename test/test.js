@@ -4,7 +4,7 @@ test('loads a module in another package', function (t) {
 
 	t.plan(2)
 
-	adLoad = require('./index.js')(require)
+	adLoad = require('../index.js')(require)
 
 	adLoad('y.js', './y-src').then(function (y) {
 		t.equal('function', typeof y)
