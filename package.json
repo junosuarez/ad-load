@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "description": "load additional browserify bundles at runtime",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": "",
   "author": "",
   "license": "proprietary",
@@ -17,6 +14,7 @@
   },
   "testling": {
     "files": "test/test.js",
+    "scripts": "test/x.js",
     "browsers": {
       "ie": [7, 8, 9],
       "chorme": [20]
