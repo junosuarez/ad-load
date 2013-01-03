@@ -14,7 +14,6 @@
   },
   "testling": {
     "files": "test/test.js",
-    "scripts": "test/x.js",
     "browsers": {
       "ie": [7, 8, 9],
       "chorme": [20]
