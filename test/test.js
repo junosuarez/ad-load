@@ -25,7 +25,7 @@ test('loads a module in another package', function (t) {
 		t.equal(false, true, 'this will fail')
 		clearTimeout(timeout)
 		t.end()
-	}, function () {
-		t.fail('error back should not occur')
+	}, function (e) {
+		t.fail('error back should not occur', e.message)
 	})
 })
