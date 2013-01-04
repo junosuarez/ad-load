@@ -1173,7 +1173,6 @@ function adLoad(require) {
 	}
 }
 
-
 var head = document.getElementsByTagName('head')[0]
 
 function loadScript(src, timeoutLength) {
