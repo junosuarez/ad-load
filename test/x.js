@@ -1162,12 +1162,14 @@ function adLoad(require) {
 
 		pendingPackages[package] = true
 
-		return loadScript(package, opts.timeout).then(function () {
+		var promise = loadScript(package, opts.timeout).then(function () {
 			delete pendingPackages[package]
 			loadedPackages[package] = true
 
 			return require(module)
 		})
+
+		return promise
 	}
 }
 
