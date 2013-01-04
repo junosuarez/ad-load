@@ -16,5 +16,6 @@ test('loads a module in another package', function (t) {
 
 test('browsars', function (t) {
 	t.plan(1)
-	t.okay(localStorage in window)
+	t.ok(localStorage in window)
+	t.end()
 })
