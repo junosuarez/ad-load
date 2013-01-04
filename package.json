@@ -7,7 +7,8 @@
   "author": "",
   "license": "proprietary",
   "dependencies": {
-    "when": "~1.7.1"
+    "when": "~1.7.1",
+    "q": "~0.8.12"
   },
   "devDependencies": {
     "tape": "~0.1.5"
@@ -15,8 +16,15 @@
   "testling": {
     "files": "test/test.js",
     "browsers": {
-      "ie": [6, 7, 8, 9],
-      "chrome": [21]
+      "ie": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "chrome": [
+        21
+      ]
     }
   }
 }

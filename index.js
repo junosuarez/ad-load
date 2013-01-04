@@ -1,4 +1,4 @@
-var when = require('when')
+var q = require('when')
 //var deferred = requireI('deferred')
 
 module.exports = adLoad
@@ -10,23 +10,20 @@ function adLoad(require) {
 
 
 	return function (package, module) {
-		var deferred = when.defer()
 
 		if (loadedPackages[package]) {
-			deferred.reject()
-			return deferred.promise
+			return q.reject()
 		}
 
 		pendingPackages[package] = true
 
-		loadScript(package).then(function () {
+		return loadScript(package).then(function () {
 			delete pendingPackages[package]
 			loadedPackages[package] = true
 
-			deferred.resolve(require(module))
+			return require(module)
 		})
 
-		return deferred.promise
 	}
 
 }
@@ -35,11 +32,11 @@ function adLoad(require) {
 var head = document.getElementsByTagName('head')[0]
 
 function loadScript(src) {
-	var deferred = when.defer()
+	var deferred = q.defer()
 
 	var timeout = setTimeout(function() {
-		deferred.reject(new Error('ETIMEOUT', src))
-	}, 7000)
+		deferred.reject(new Error('ETIMEOUT - ' + src))
+	}, 1000)
 
 	var script = document.createElement('script')
 	script.setAttribute('src', src)
@@ -48,8 +45,8 @@ function loadScript(src) {
 	head.appendChild(script)
 
 	script.onload = function () {
-		clearTimeout(timeout)
-		deferred.resolve()
+		//clearTimeout(timeout)
+		//deferred.resolve()
 	}
 	script.onerror = function (e) {
 		clearTimeout(timeout)
