@@ -9,8 +9,7 @@ test('loads a module in another package', function (t) {
 	adLoad('y.js', './y-src').then(function (y) {
 		t.equal('function', typeof y)
 		t.equal(6, y(2,3))
+		t.equal(false, true)
 		t.end()
 	})
-
-
 })
