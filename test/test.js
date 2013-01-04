@@ -17,6 +17,8 @@ test('loads a module in another package', function (t) {
 
 	adLoad = require('../index.js')(require)
 
+	t.equal(window.require, require)
+
 	t.equal('function', typeof adLoad, 'fns errywere')
 
 	adLoad('y.js', './y-src').then(function (y) {
