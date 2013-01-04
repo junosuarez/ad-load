@@ -13,3 +13,8 @@ test('loads a module in another package', function (t) {
 		t.end()
 	})
 })
+
+test('browsars', function (t) {
+	t.plan(1)
+	t.okay(localStorage in window)
+})
