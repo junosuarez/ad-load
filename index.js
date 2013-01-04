@@ -2,14 +2,15 @@ var q = require('when')
 //var deferred = requireI('deferred')
 
 module.exports = adLoad
+module.exports.timeout = 7000
 
 var pendingPackages = []
 var loadedPackages = []
 
 function adLoad(require) {
 
-
-	return function (package, module) {
+	return function (package, module, opts) {
+		opts || (opts = {})
 
 		if (loadedPackages[package]) {
 			return q.reject()
@@ -17,26 +18,24 @@ function adLoad(require) {
 
 		pendingPackages[package] = true
 
-		return loadScript(package).then(function () {
+		return loadScript(package, opts.timeout).then(function () {
 			delete pendingPackages[package]
 			loadedPackages[package] = true
 
 			return require(module)
 		})
-
 	}
-
 }
 
 
 var head = document.getElementsByTagName('head')[0]
 
-function loadScript(src) {
+function loadScript(src, timeoutLength) {
 	var deferred = q.defer()
 
 	var timeout = setTimeout(function() {
 		deferred.reject(new Error('ETIMEOUT - ' + src))
-	}, 1000)
+	}, timeoutLength || module.exports.timeout)
 
 	var script = document.createElement('script')
 	script.setAttribute('src', src)
@@ -45,12 +44,20 @@ function loadScript(src) {
 	head.appendChild(script)
 
 	script.onload = function () {
-		//clearTimeout(timeout)
-		//deferred.resolve()
+		clearTimeout(timeout)
+		deferred.resolve()
 	}
 	script.onerror = function (e) {
 		clearTimeout(timeout)
 		deferred.reject(e)
+	}
+
+	// for IE:
+	script.onreadystatechange = function () {
+		if (script.readyState === 'loaded' || script.readyState === 'complete') {
+			clearTimeout(timeout)
+			deferred.resolve()
+		}
 	}
 
 	return deferred.promise
