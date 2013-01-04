@@ -1163,7 +1163,7 @@ function adLoad(require) {
 
 		pendingPackages[package] = true
 
-		loadScript(package).then(function (package) {
+		loadScript(package).then(function () {
 			delete pendingPackages[package]
 			loadedPackages[package] = true
 
@@ -1181,14 +1181,24 @@ var head = document.getElementsByTagName('head')[0]
 function loadScript(src) {
 	var deferred = when.defer()
 
+	var timeout = setTimeout(function() {
+		deferred.reject(new Error('ETIMEOUT', src))
+	}, 7000)
+
 	var script = document.createElement('script')
 	script.setAttribute('src', src)
 	script.async = true
 
 	head.appendChild(script)
 
-	script.onload = deferred.resolve
-	script.onerror = deferred.reject
+	script.onload = function () {
+		clearTimeout(timeout)
+		deferred.resolve()
+	}
+	script.onerror = function (e) {
+		clearTimeout(timeout)
+		deferred.reject(e)
+	}
 
 	return deferred.promise
 }
